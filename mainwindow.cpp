@@ -13,6 +13,35 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     setWindowTitle("ComportFree v0.1");
+    setGeometry(100, 100, 400, 300);
+
+    ui->ui_mainLayout->setContentsMargins(0, 0, 0, 0); // // Remove margin
+    ui->ui_mainLayout->setSpacing(0);
+    ui->ui_mainLayout->addWidget(ui->tabWidget);
+
+    ui->tab_basic->setLayout(ui->vLayout_basic_main);
+    ui->vLayout_basic_main->setContentsMargins(0, 15, 0, 15); // 마진 제거
+
+
+    //Create QStatusBar instance directly and add it to the layout
+    m_statusBar = new QStatusBar(this); // Specify the parent widget
+    ui->ui_mainLayout->addWidget(m_statusBar);  // Add to the bottom of VBoxLayout
+
+    // Apply style to QStatusBar as well.
+    m_statusBar->setStyleSheet(
+        "QStatusBar { "
+        "   background-color: #e0e0e0; "
+        "   border-top: 1px solid #c0c0c0; "
+        "   padding: 0px; "
+        "   border: 1px solid block; " // Check QStatusBar's own boundaries
+        "}"
+        "QStatusBar::item { "
+        "   border: none; "
+        "}"
+        );
+
+    m_statusBar->showMessage("Ready", 0);
+
 
     // Timer init and connect
     m_displayTimer = new QTimer(this);
@@ -23,7 +52,15 @@ MainWindow::MainWindow(QWidget *parent)
     ui->plnTxtViewer->setMaximumBlockCount(1000);
     ui->plnTxtViewer->setReadOnly(true);
 
+    //connections
+    connect(ui->btnPortsInfo, &QPushButton::clicked, this, &MainWindow::slotBtnPortsInfo);
+    connect(ui->btnOpenPort, &QPushButton::clicked, this, &MainWindow::slotBtnOpenPort);
+    connect(ui->btnClosePort, &QPushButton::clicked, this, &MainWindow::slotBtnClosePort);
+    connect(ui->btnSend, &QPushButton::clicked, this, &MainWindow::slotBtnSend);
+    connect(ui->btnClearTxtBrower, &QPushButton::clicked, this, &MainWindow::slotBtnClearTxtBrower);
+
 }
+
 
 MainWindow::~MainWindow()
 {
@@ -36,7 +73,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_btnPortsInfo_clicked()
+void MainWindow::slotBtnPortsInfo()
 {
     loadPorts();
 }
@@ -47,10 +84,12 @@ void MainWindow::loadPorts()
     foreach(auto &port, QSerialPortInfo::availablePorts()) {
         ui->cmbPorts->addItem(port.portName());
     }
+
+    m_statusBar->showMessage("Searched for comports.", 0);
 }
 
 
-void MainWindow::on_btnOpenPort_clicked()
+void MainWindow::slotBtnOpenPort()
 {
     if(m_serialPort != nullptr) {
         m_serialPort->close();
@@ -67,28 +106,27 @@ void MainWindow::on_btnOpenPort_clicked()
 
     if(m_serialPort->open(QIODevice::ReadWrite)) {
         //QMessageBox::information(this, "Result", "Port Opened successfully");
-
+        m_statusBar->showMessage("Port is opened successfully", 0);
         connect(m_serialPort, &QSerialPort::readyRead, this, &MainWindow::slotReadData);
     } else {
-        QMessageBox::critical(this, "Port Error",
-                                 "Unable to open specified port ...");
+        m_statusBar->showMessage("Unable to open specified port ...", 0);
     }
 
 }
 
-void MainWindow::on_btnClosePort_clicked()
+void MainWindow::slotBtnClosePort()
 {
     if(m_serialPort != nullptr && m_serialPort->isOpen()) {
         m_serialPort->close();
+        m_statusBar->showMessage("Port is closed.", 0);
     }
 }
 
 
-void MainWindow::on_btnSend_clicked()
+void MainWindow::slotBtnSend()
 {
     if(m_serialPort == nullptr || !m_serialPort->isOpen()) {
-        QMessageBox::critical(this, "Port Error",
-                              "Comport is not opened!");
+        m_statusBar->showMessage("Comport is not opened!", 0);
         return;
     }
 
@@ -99,9 +137,8 @@ void MainWindow::slotReadData()
 {
 
     if(m_serialPort == nullptr || !m_serialPort->isOpen()) {
-        // To be displayed in the status bar.
-        qDebug() << "Comport is not opened!";
-        // QMessageBox::critical(this, "Port Error", "Comport is not opened!");
+        m_statusBar->showMessage("Comport is not opened!", 0);
+
         return;
     }
 
@@ -123,7 +160,7 @@ void MainWindow::slotReadData()
 void MainWindow::slotProcessAndDisplayBuffer()
 {
     if (m_receivedBuffer.isEmpty()) {
-        m_displayTimer->stop(); // 버퍼가 비면 타이머를 멈춥니다.
+        m_displayTimer->stop(); // Stops the timer if the buffer is empty.
         return;
     }
 
@@ -189,7 +226,7 @@ void MainWindow::slotProcessAndDisplayBuffer()
 }
 
 
-void MainWindow::on_btnClearTxtBrower_clicked()
+void MainWindow::slotBtnClearTxtBrower()
 {
     ui->plnTxtViewer->clear();
 }
