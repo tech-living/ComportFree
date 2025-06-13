@@ -12,6 +12,8 @@
 #include <QScrollBar>
 #include <QStatusBar>
 
+#include "CSerialport.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -33,20 +35,21 @@ private slots:
     void slotBtnClearTxtBrower();
     void slotBtnClosePort();
 
-    void slotReadData();
-    void slotProcessAndDisplayBuffer(); // QTimer::timeout() 시그널에 연결될 슬롯
+    void slotReadData(QByteArray _data);
+    //void slotProcessAndDisplayBuffer(); // QTimer::time
 
 private:
     Ui::MainWindow *ui;
 
-    QStatusBar *m_statusBar; // QStatusBar 인스턴스 선언
+    QStatusBar *m_statusBar;
 
 
     void loadPorts();
-    QSerialPort *m_serialPort;
+    //QSerialPort *m_serialPort;
+    CSerialport m_csPort;
 
-    QByteArray m_receivedBuffer;         // 수신 버퍼
-    QTimer* m_displayTimer = nullptr;    // 디스플레이 업데이트 타이머
+    QByteArray m_receivedBuffer;         // receive buffer
+    QTimer* m_displayTimer = nullptr;    // Display update Timer
 
 };
 #endif // MAINWINDOW_H
