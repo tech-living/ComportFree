@@ -30,6 +30,7 @@ private slots:
 
 signals:
     void sigDataReceived(QByteArray _data);
+    void sigDataReceivedString(QString _strData);
 
 };
 

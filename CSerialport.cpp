@@ -64,11 +64,10 @@ void CSerialport::close()
 
 void CSerialport::slotReadData()
 {
-    if(m_serialPort->isOpen()) {
-        emit sigDataReceived(m_serialPort->readAll());
-    }
+    // if(m_serialPort->isOpen()) {
+    //     emit sigDataReceived(m_serialPort->readAll());
+    // }
 
-    /*
     // Reads all available data from the serial port.
     auto receivedData = m_serialPort->readAll();
 
@@ -81,7 +80,7 @@ void CSerialport::slotReadData()
         m_displayTimer->start();
     }
 
-*/
+
 }
 
 void CSerialport::slotProcessAndDisplayBuffer()
@@ -144,10 +143,7 @@ void CSerialport::slotProcessAndDisplayBuffer()
         lineToDisplay = QString("%1").arg(asciiDisplay);
     }
 
-    // aAppends plain text using appendPlainText() function.
-    //ui->plnTxtViewer->appendPlainText(lineToDisplay);
 
-    // Scrolls the text viewer to the latest content.
-    //ui->plnTxtViewer->verticalScrollBar()->setValue(ui->plnTxtViewer->verticalScrollBar()->maximum());
+    emit sigDataReceivedString(lineToDisplay);
 
 }
