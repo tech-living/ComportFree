@@ -8,6 +8,8 @@
 
 #include "CSerialport.h"
 
+#include "uiabout.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class MainWindow;
@@ -43,6 +45,8 @@ private:
     CSerialport m_csPort;
 
     QString m_strLogData;
+
+    UiAbout *m_uiAbout;
 
 };
 #endif // MAINWINDOW_H

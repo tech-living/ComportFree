@@ -2,6 +2,8 @@
 #include "./ui_mainwindow.h"
 
 #include <QFileDialog>
+#include "GlobalVariable.h"
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QWidget(parent)
@@ -10,16 +12,23 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    setWindowTitle("ComportFree v0.1");
-    setGeometry(100, 100, 400, 300);
+    extern const QString strVerision;
 
-    ui->ui_mainLayout->setContentsMargins(0, 0, 0, 0); // // Remove margin
+    setWindowTitle("ComportFree " + strVerision);
+    setGeometry(300, 100, 600, 450);
+
+    ui->ui_mainLayout->setContentsMargins(0, 0, 0, 0); // Remove margin
     ui->ui_mainLayout->setSpacing(0);
     ui->ui_mainLayout->addWidget(ui->tabWidget);
 
     ui->tab_basic->setLayout(ui->vLayout_basic_main);
     ui->vLayout_basic_main->setContentsMargins(0, 15, 0, 15);
 
+    ui->tab_about->setLayout(ui->vLayout_about_main);
+    m_uiAbout = new UiAbout(ui->tabWidget);
+    ui->vLayout_about_main->addWidget(m_uiAbout);
+
+    ui->tabWidget->setCurrentIndex(0);
 
     //Create QStatusBar instance directly and add it to the layout
     m_statusBar = new QStatusBar(this); // Specify the parent widget
