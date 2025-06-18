@@ -8,8 +8,8 @@ Free comport program made using Qt/C++
 This is a **free-to-use** serial port communication program designed for developers and engineers working with various serial communication standards.
   
 
-  ![ComportFree Logo](resource/logo.PNG)
-  
+  ![ComportFree Logo](resource/smallLogo.png)
+
 
 ## 💡 Why This Project?
 

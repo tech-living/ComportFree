@@ -2,12 +2,9 @@
 #define MAINWINDOW_H
 
 #include <QWidget>
-#include <QSerialPortInfo>
-#include <QScrollBar>
 #include <QStatusBar>
 
-#include "CSerialport.h"
-
+#include "uibasic.h"
 #include "uiabout.h"
 
 QT_BEGIN_NAMESPACE
@@ -24,28 +21,14 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-private slots:
-    void slotBtnPortsInfo();
-    void slotBtnOpenPort();
-    void slotBtnSend();
-    void slotBtnClearLog();
-    void slotBtnClosePort();
-    void slotBtnSaveLog();
-
-    void slotReadData(QString _data);
-
-
 private:
     Ui::MainWindow *ui;
 
     QStatusBar *m_statusBar;
 
-    void loadPorts();
-    //QSerialPort *m_serialPort;
-    CSerialport m_csPort;
-
     QString m_strLogData;
 
+    UiBasic *m_uiBasic;
     UiAbout *m_uiAbout;
 
 };

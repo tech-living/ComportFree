@@ -27,6 +27,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         uiabout.h uiabout.cpp uiabout.ui
         GlobalVariable.h
         resource.qrc
+        uibasic.h uibasic.cpp uibasic.ui
 
 
     )
