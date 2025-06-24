@@ -26,6 +26,7 @@ UiBasic::UiBasic(QWidget *parent)
     connect(ui->btnSend, &QPushButton::clicked, this, &UiBasic::slotBtnSend);
     connect(ui->btnClearTxtLog, &QPushButton::clicked, this, &UiBasic::slotBtnClearLog);
     connect(ui->btnSaveLog, &QPushButton::clicked, this, &UiBasic::slotBtnSaveLog);
+    connect(ui->btnClose, &QPushButton::clicked, this, &QApplication::quit);
 
 }
 

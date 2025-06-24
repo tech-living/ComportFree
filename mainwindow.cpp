@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     extern const QString strVerision;
 
     setWindowTitle("ComportFree " + strVerision);
-    setGeometry(300, 100, 600, 450);
+    setGeometry(300, 100, 475, 315);
 
     //tabWidget
     ui->ui_mainLayout->setContentsMargins(0, 0, 0, 0); // Remove margin
@@ -26,6 +26,13 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tab_basic->setLayout(ui->vLayout_basic_main);
     m_uiBasic = new UiBasic(ui->tab_basic);
     ui->vLayout_basic_main->addWidget(m_uiBasic);
+
+
+    //Setting Widget
+    ui->tab_setting->setLayout(ui->vLayout_setting_main);
+    m_uiSetting = new UiSetting(ui->tab_setting);
+    ui->vLayout_setting_main->addWidget(m_uiSetting);
+
 
     //About Widget
     ui->tab_about->setLayout(ui->vLayout_about_main);

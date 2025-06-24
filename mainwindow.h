@@ -5,6 +5,7 @@
 #include <QStatusBar>
 
 #include "uibasic.h"
+#include "uisetting.h"
 #include "uiabout.h"
 
 QT_BEGIN_NAMESPACE
@@ -29,6 +30,7 @@ private:
     QString m_strLogData;
 
     UiBasic *m_uiBasic;
+    UiSetting *m_uiSetting;
     UiAbout *m_uiAbout;
 
 };

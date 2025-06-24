@@ -10,6 +10,12 @@
     <height>402</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>475</width>
+    <height>315</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -67,7 +73,7 @@ QTabBar::tab:hover {
 }</string>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_basic">
       <property name="styleSheet">
@@ -92,6 +98,17 @@ QTabBar::tab:hover {
       <attribute name="title">
        <string>Setting</string>
       </attribute>
+      <widget class="QWidget" name="verticalLayoutWidget_3">
+       <property name="geometry">
+        <rect>
+         <x>220</x>
+         <y>200</y>
+         <width>20</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <layout class="QVBoxLayout" name="vLayout_setting_main"/>
+      </widget>
      </widget>
      <widget class="QWidget" name="tab_about">
       <attribute name="title">
